@@ -13,11 +13,22 @@ if not api_key:
     raise RuntimeError("API key not found")
 
 client = genai.Client(api_key=api_key)
+prompt = "Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum."
 
 response = client.models.generate_content(
-    model='gemini-2.5-flash',
-    contents="Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum."
+    model = 'gemini-2.5-flash',
+    contents = prompt
 )
+
+if response.usage_metadata:
+    print(
+            f"\nUser prompt: {prompt}\n\n"
+        f"Prompt tokens: {response.usage_metadata.prompt_token_count}\n"
+        f"Response tokens: {response.usage_metadata.candidates_token_count}\n"
+    )
+else:
+    raise RuntimeError("Failed API request, no metadata")
+
 print(response.text)
 
 if __name__ == "__main__":
