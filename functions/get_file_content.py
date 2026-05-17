@@ -1,4 +1,19 @@
 import os
+from config import *
+
+def read_file_contents(file_path):
+    with open(file_path, "r") as file:
+        file_content_string = file.read(MAX_CHARS)
+        if file.read(MAX_CHARS + 1):
+            file_content_string += f"[...File \"file_path\" truncated at {MAX_CHARS} characters]"
+    return (
+            f"\n"
+            f"---- Start of File Contents ----"
+            f"\n" +
+            file_content_string +
+            f"\n"
+            f"---- End of File Contents ----"
+    )
 
 def get_file_content(working_directory, file_path):
     try:
@@ -25,7 +40,8 @@ def get_file_content(working_directory, file_path):
         return (
             f"\n"
             f"Result for \"{file_path}\" file:\n"
-            f"  Success: \"{file_path}\" is within the working directory\n"
+            f"  Success: \"{file_path}\" is within the working directory\n" +
+            read_file_contents(target_file)
         )
 
     else:
