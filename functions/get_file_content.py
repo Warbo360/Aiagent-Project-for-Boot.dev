@@ -43,7 +43,6 @@ def get_file_content(working_directory, file_path):
             f"  Success: \"{file_path}\" is within the working directory\n" +
             read_file_contents(target_file)
         )
-
     else:
         return (
             f"\n"
